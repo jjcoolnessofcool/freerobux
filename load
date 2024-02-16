@@ -1,0 +1,569 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("ImageLabel")
+local TextLabel = Instance.new("TextLabel")
+local Line = Instance.new("TextLabel")
+local Exit = Instance.new("ImageButton")
+local TextButton = Instance.new("TextButton")
+local Target = Instance.new("TextBox")
+local TextButton_2 = Instance.new("TextButton")
+local TextButton_3 = Instance.new("TextButton")
+local TextLabel_2 = Instance.new("TextLabel")
+local PlayButton = Instance.new("TextButton")
+local MusicIDTextBox = Instance.new("TextBox")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Frame.Name = "Frame"
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.Position = UDim2.new(0.36145404, 0, 0.353598028, 0)
+Frame.Size = UDim2.new(0, 403, 0, 236)
+Frame.Image = "rbxassetid://3570695787"
+Frame.ImageColor3 = Color3.fromRGB(58, 58, 58)
+Frame.ScaleType = Enum.ScaleType.Slice
+Frame.SliceCenter = Rect.new(100, 100, 100, 100)
+Frame.SliceScale = 0.120
+Frame.Active = true
+Frame.Draggable = true
+
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 403, 0, 29)
+TextLabel.Font = Enum.Font.Highway
+TextLabel.Text = "ROBLOX TROLL MENU"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+Line.Name = "Line"
+Line.Parent = Frame
+Line.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Line.BorderSizePixel = 0
+Line.Position = UDim2.new(0, 0, 0.122881353, 0)
+Line.Size = UDim2.new(0, 403, 0, 2)
+Line.Font = Enum.Font.SourceSans
+Line.Text = ""
+Line.TextColor3 = Color3.fromRGB(0, 0, 0)
+Line.TextSize = 14.000
+
+Exit.Name = "Exit"
+Exit.Parent = Frame
+Exit.BackgroundColor3 = Color3.fromRGB(58, 58, 58)
+Exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Exit.BorderSizePixel = 0
+Exit.Position = UDim2.new(0.0347394533, 0, 0, 0)
+Exit.Size = UDim2.new(0, 36, 0, 29)
+Exit.Image = "http://www.roblox.com/asset/?id=7120897383"
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.0347394533, 0, 0.228813559, 0)
+TextButton.Size = UDim2.new(0, 152, 0, 39)
+TextButton.Font = Enum.Font.RobotoCondensed
+TextButton.Text = "KICK PLAYER"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 14.000
+
+Target.Name = "Target"
+Target.Parent = Frame
+Target.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+Target.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Target.BorderSizePixel = 0
+Target.Position = UDim2.new(0.444168746, 0, 0.228813559, 0)
+Target.Size = UDim2.new(0, 173, 0, 30)
+Target.Font = Enum.Font.RobotoCondensed
+Target.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+Target.PlaceholderText = "Insert Username"
+Target.Text = ""
+Target.TextColor3 = Color3.fromRGB(255, 255, 255)
+Target.TextSize = 14.000
+
+TextButton_2.Parent = Frame
+TextButton_2.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.BorderSizePixel = 0
+TextButton_2.Position = UDim2.new(0.0347394533, 0, 0.402542382, 0)
+TextButton_2.Size = UDim2.new(0, 152, 0, 39)
+TextButton_2.Font = Enum.Font.RobotoCondensed
+TextButton_2.Text = "FLING ALL"
+TextButton_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.TextSize = 14.000
+TextButton_2.MouseButton1Down:connect(function()
+	local Targets = {"All"}
+
+	local Players = game:GetService("Players")
+	local Player = Players.LocalPlayer
+
+	local ExcludedPlayers = {"deathdeathx", "mylitebossroblox154", "Q3R3WR", "qkqww3ra4snlydersk", "1LYYYGIA", "die66", ""}
+
+	local AllBool = false
+
+	local GetPlayer = function(Name)
+		Name = Name:lower()
+		if Name == "all" or Name == "others" then
+			AllBool = true
+			return
+		elseif Name == "random" then
+			local GetPlayers = Players:GetPlayers()
+			if table.find(GetPlayers, Player) then table.remove(GetPlayers, table.find(GetPlayers, Player)) end
+			return GetPlayers[math.random(#GetPlayers)]
+		elseif Name ~= "random" and Name ~= "all" and Name ~= "others" then
+			for _, x in ipairs(Players:GetPlayers()) do
+				if x ~= Player and x.Name:lower():match("^" .. Name) then
+					return x
+				end
+			end
+		else
+			return
+		end
+	end
+
+	local Message = function(_Title, _Text, Time)
+		game:GetService("StarterGui"):SetCore("SendNotification", { Title = "HAHA!", Text = "MADE BY ._75f", Duration = 5 })
+	end
+
+	local SkidFling = function(TargetPlayer)
+		local Character = Player.Character
+		local Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
+		local RootPart = Humanoid and Humanoid.RootPart
+
+		local TCharacter = TargetPlayer.Character
+		local THumanoid
+		local TRootPart
+		local THead
+		local Accessory
+		local Handle
+
+		if TCharacter:FindFirstChildOfClass("Humanoid") then
+			THumanoid = TCharacter:FindFirstChildOfClass("Humanoid")
+		end
+		if THumanoid and THumanoid.RootPart then
+			TRootPart = THumanoid.RootPart
+		end
+		if TCharacter:FindFirstChild("Head") then
+			THead = TCharacter.Head
+		end
+		if TCharacter:FindFirstChildOfClass("Accessory") then
+			Accessory = TCharacter:FindFirstChildOfClass("Accessory")
+		end
+		if Accessory and Accessory:FindFirstChild("Handle") then
+			Handle = Accessory.Handle
+		end
+
+		if Character and Humanoid and RootPart then
+			if RootPart.Velocity.Magnitude < 50 then
+				getgenv().OldPos = RootPart.CFrame
+			end
+			if THumanoid and THumanoid.Sit and not AllBool then
+				return Message("Error Occurred", "Targeting is sitting", 5)
+			end
+			if THead then
+				workspace.CurrentCamera.CameraSubject = THead
+			elseif not THead and Handle then
+				workspace.CurrentCamera.CameraSubject = Handle
+			elseif THumanoid and TRootPart then
+				workspace.CurrentCamera.CameraSubject = THumanoid
+			end
+			if not TCharacter:FindFirstChildWhichIsA("BasePart") then
+				return
+			end
+
+			local FPos = function(BasePart, Pos, Ang)
+				RootPart.CFrame = CFrame.new(BasePart.Position) * Pos * Ang
+				Character:SetPrimaryPartCFrame(CFrame.new(BasePart.Position) * Pos * Ang)
+				RootPart.Velocity = Vector3.new(9e7, 9e7 * 10, 9e7)
+				RootPart.RotVelocity = Vector3.new(9e8, 9e8, 9e8)
+			end
+
+			local SFBasePart = function(BasePart)
+				local TimeToWait = 2
+				local Time = tick()
+				local Angle = 0
+
+				repeat
+					if RootPart and THumanoid then
+						if BasePart.Velocity.Magnitude < 50 then
+							Angle = Angle + 100
+
+							FPos(BasePart, CFrame.new(0, 1.5, 0) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(2.25, 1.5, -2.25) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(-2.25, -1.5, 2.25) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, 1.5, 0) + THumanoid.MoveDirection, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0) + THumanoid.MoveDirection, CFrame.Angles(math.rad(Angle), 0, 0))
+							task.wait()
+						else
+							FPos(BasePart, CFrame.new(0, 1.5, THumanoid.WalkSpeed), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, -THumanoid.WalkSpeed), CFrame.Angles(0, 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, 1.5, THumanoid.WalkSpeed), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, 1.5, TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, -TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(0, 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, 1.5, TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(-90), 0, 0))
+							task.wait()
+
+							FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+							task.wait()
+						end
+					else
+						break
+					end
+				until BasePart.Velocity.Magnitude > 500 or BasePart.Parent ~= TargetPlayer.Character or TargetPlayer.Parent ~= Players or not TargetPlayer.Character == TCharacter or THumanoid.Sit or Humanoid.Health <= 0 or tick() > Time + TimeToWait
+			end
+
+			workspace.FallenPartsDestroyHeight = 0 / 0
+
+			local BV = Instance.new("BodyVelocity")
+			BV.Name = "EpixVel"
+			BV.Parent = RootPart
+			BV.Velocity = Vector3.new(9e8, 9e8, 9e8)
+			BV.MaxForce = Vector3.new(1 / 0, 1 / 0, 1 / 0)
+
+			Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+
+			if TRootPart and THead then
+				if (TRootPart.CFrame.p - THead.CFrame.p).Magnitude > 5 then
+					SFBasePart(THead)
+				else
+					SFBasePart(TRootPart)
+				end
+			elseif TRootPart and not THead then
+				SFBasePart(TRootPart)
+			elseif not TRootPart and THead then
+				SFBasePart(THead)
+			elseif not TRootPart and not THead and Accessory and Handle then
+				SFBasePart(Handle)
+			else
+				return Message("Error Occurred", "Target is missing everything", 5)
+			end
+
+			BV:Destroy()
+			Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+			workspace.CurrentCamera.CameraSubject = Humanoid
+
+			repeat
+				RootPart.CFrame = getgenv().OldPos * CFrame.new(0, .5, 0)
+				Character:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, .5, 0))
+				Humanoid:ChangeState("GettingUp")
+				for _, x in ipairs(Character:GetChildren()) do
+					if x:IsA("BasePart") then
+						x.Velocity, x.RotVelocity = Vector3.new(), Vector3.new()
+					end
+				end
+				task.wait()
+			until (RootPart.Position - getgenv().OldPos.p).Magnitude < 25
+			workspace.FallenPartsDestroyHeight = getgenv().FPDH
+		else
+			return Message("Error Occurred", "Random error", 5)
+		end
+	end
+
+	if not Welcome then
+		Message("Script by AnthonyIsntHere", "Enjoy!", 5)
+	end
+	getgenv().Welcome = true
+
+	-- Put your character in god mode
+	if Player and Player.Character then
+		local Humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
+		if Humanoid then
+			Humanoid.MaxHealth = math.huge
+			Humanoid.Health = math.huge
+		end
+	end
+
+	if Targets[1] then
+		for _, x in ipairs(Targets) do
+			GetPlayer(x)
+		end
+	else
+		return
+	end
+
+	if AllBool then
+		for _, x in ipairs(Players:GetPlayers()) do
+			local isExcluded = false
+			for _, excludedPlayer in ipairs(ExcludedPlayers) do
+				if x.Name == excludedPlayer then
+					isExcluded = true
+					break
+				end
+			end
+			if not isExcluded then
+				SkidFling(x)
+			end
+		end
+	end
+
+	for _, x in ipairs(Targets) do
+		local TPlayer = GetPlayer(x)
+		if TPlayer and TPlayer ~= Player and not table.find(ExcludedPlayers, TPlayer.Name) then
+			SkidFling(TPlayer)
+		elseif not TPlayer and not AllBool then
+			Message("Error Occurred", "Username Invalid", 5)
+		end
+	end
+end)
+
+
+TextButton_3.Parent = Frame
+TextButton_3.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_3.BorderSizePixel = 0
+TextButton_3.Position = UDim2.new(0.0347394533, 0, 0.584745765, 0)
+TextButton_3.Size = UDim2.new(0, 152, 0, 39)
+TextButton_3.Font = Enum.Font.RobotoCondensed
+TextButton_3.Text = "FLY"
+TextButton_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_3.TextSize = 14.000
+TextButton_3.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+	game:GetService("StarterGui"):SetCore("SendNotification", { Title = "HAHA!", Text = "MADE BY ._75f", Duration = 5 })
+end)
+
+
+TextLabel_2.Parent = Frame
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_2.BorderSizePixel = 0
+TextLabel_2.Position = UDim2.new(0.444168746, 0, 0.402542382, 0)
+TextLabel_2.Size = UDim2.new(0, 173, 0, 82)
+TextLabel_2.Font = Enum.Font.RobotoCondensed
+TextLabel_2.Text = "CREDITS: Made By _.75f On Discord"
+TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.TextScaled = true
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+
+PlayButton.Name = "PlayButton"
+PlayButton.Parent = Frame
+PlayButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+PlayButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+PlayButton.BorderSizePixel = 0
+PlayButton.Position = UDim2.new(0.0347394533, 0, 0.775423706, 0)
+PlayButton.Size = UDim2.new(0, 152, 0, 39)
+PlayButton.Font = Enum.Font.RobotoCondensed
+PlayButton.Text = "PLAY MUSIC"
+PlayButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayButton.TextSize = 14.000
+
+MusicIDTextBox.Name = "MusicIDTextBox"
+MusicIDTextBox.Parent = Frame
+MusicIDTextBox.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+MusicIDTextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+MusicIDTextBox.BorderSizePixel = 0
+MusicIDTextBox.Position = UDim2.new(0.444168746, 0, 0.792372882, 0)
+MusicIDTextBox.Size = UDim2.new(0, 173, 0, 30)
+MusicIDTextBox.Font = Enum.Font.RobotoCondensed
+MusicIDTextBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+MusicIDTextBox.PlaceholderText = "Insert Music ID"
+MusicIDTextBox.Text = ""
+MusicIDTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+MusicIDTextBox.TextSize = 14.000
+
+-- Scripts:
+
+local function NUZF_fake_script() -- TextLabel.RainbowText 
+	local script = Instance.new('Script', TextLabel)
+
+	local text = script.Parent
+	local add = 10
+	wait(1)
+	local k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(k/255,0/255,0/255)
+	k = k + add
+	wait()
+	end
+	while true do
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255,k/255,0/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255 - k/255,255/255,0/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(0/255,255/255,k/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(0/255,255/255 - k/255,255/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(k/255,0/255,255/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255,0/255,255/255 - k/255)
+	k = k + add
+	wait()
+	end
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255 - k/255,0/255,0/255)
+	k = k + add
+	wait()
+	end
+	end
+end
+coroutine.wrap(NUZF_fake_script)()
+local function ZAHM_fake_script() -- Exit.script 
+	local script = Instance.new('LocalScript', Exit)
+
+	script.Parent.MouseButton1Down:connect(function()
+		script.Parent.Parent.Parent.Frame.Visible = false
+	end)
+end
+coroutine.wrap(ZAHM_fake_script)()
+local function FLCTAPK_fake_script() -- TextButton.Kick 
+	local script = Instance.new('LocalScript', TextButton)
+
+	local button = script.Parent
+	local target = script.Parent.Parent.Target
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		game.Players[target.Text]:Kick("Kicked By Jo MaMa")
+	end)
+end
+coroutine.wrap(FLCTAPK_fake_script)()
+local function RZVDHE_fake_script() -- TextLabel_2.RainbowText 
+	local script = Instance.new('Script', TextLabel_2)
+
+	local text = script.Parent
+	local add = 10
+	wait(1)
+	local k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(k/255,0/255,0/255)
+	k = k + add
+	wait()
+	end
+	while true do
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255,k/255,0/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255 - k/255,255/255,0/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(0/255,255/255,k/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(0/255,255/255 - k/255,255/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(k/255,0/255,255/255)
+	k = k + add
+	wait()
+	end
+	k = 1
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255,0/255,255/255 - k/255)
+	k = k + add
+	wait()
+	end
+	while k <= 255 do
+	text.TextColor3 = Color3.new(255/255 - k/255,0/255,0/255)
+	k = k + add
+	wait()
+	end
+	end
+end
+coroutine.wrap(RZVDHE_fake_script)()
+local function BYON_fake_script() -- Frame.LocalScript 
+	local script = Instance.new('LocalScript', Frame)
+
+	local frame = script.Parent
+	local MusicIDTextBox = frame:WaitForChild("MusicIDTextBox")
+	local PlayButton = frame:WaitForChild("PlayButton")
+	local Sound = Instance.new("Sound")
+	
+	function PlayMusic()
+		local musicID = MusicIDTextBox.Text
+		if tonumber(musicID) then
+			Sound.SoundId = "rbxassetid://"..musicID
+			-- Play the sound locally
+			Sound.Parent = game.Players.LocalPlayer.Character
+			Sound:Play()
+			-- Clean up after sound finishes
+			Sound.Ended:Connect(function()
+				Sound:Destroy()
+			end)
+		else
+			print("Invalid music ID!")
+		end
+	end
+	
+	PlayButton.MouseButton1Click:Connect(PlayMusic)
+end
+coroutine.wrap(BYON_fake_script)()
